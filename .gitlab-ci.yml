@@ -1,0 +1,22 @@
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  tags:
+    - wvm-srv6
+  before_script:
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install pylint
+  script:
+    - echo "Building the code"
+    - pylint TESTCICD/
+
+test:
+  stage: test
+  tags:
+    - wvm-srv6
+  script:
+    - python3 -m unittest discover -s . -p "*.py"
